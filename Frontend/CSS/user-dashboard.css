@@ -1,0 +1,42 @@
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+table th,
+table td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: left;
+}
+table th {
+  background-color: #f2f2f2;
+}
+.error-message {
+  color: red;
+  font-weight: bold;
+}
+select {
+  padding: 4px;
+}
+.priority-low {
+  color: green;
+  font-weight: bold;
+}
+.priority-medium {
+  color: orange;
+  font-weight: bold;
+}
+.priority-high {
+  color: red;
+  font-weight: bold;
+}
+.controls {
+  display: flex;
+  justify-content: flex-end;
+  gap: 20px;
+}
+.pagination {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}

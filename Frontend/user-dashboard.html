@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="/CSS/style.css" />
+    <link rel="shortcut icon" type="image/png" href="img/favicon.png" />
+    <link rel="stylesheet" href="/CSS/user-dashboard.css" />
+    <script defer src="/js/user-dashboard.js"></script>
+    <title>Task Mangement Application</title>
+  </head>
+  <body>
+    <div class="container">
+      <header class="header">
+        <nav class="nav nav--tours">
+          <a href="#" class="nav__el">Assign Task</a>
+        </nav>
+        <div class="header__logo">
+          <img src="/img/logo-1.webp" alt="Codem logo" />
+        </div>
+        <nav class="nav nav--user">
+          <button class="btn-logout">Log out</button>
+        </nav>
+      </header>
+      <div>
+        <div class="controls">
+          <div>
+            <label for="status-filter">Filter by Status:</label>
+            <select id="status-filter">
+              <option value="">All</option>
+              <option value="open">Open</option>
+              <option value="inprogress">In Progress</option>
+              <option value="rejected">Rejected</option>
+              <option value="completed">Completed</option>
+            </select>
+      
+            <label for="priority-filter">Filter by Priority:</label>
+            <select id="priority-filter">
+              <option value="">All</option>
+              <option value="low">Low</option>
+              <option value="medium">Medium</option>
+              <option value="high">High</option>
+            </select>
+          </div>
+        </div>
+        <div id="task-container">
+          <table id="task-table">
+            <thead>
+              <tr>
+                <th>Assigned Date</th>
+                <th>Title</th>
+                <th>Description</th>
+                <th>Priority</th>
+                <th>Due Date</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              <!-- Dynamic rows will go here -->
+            </tbody>
+          </table>
+        </div>
+        <div id="error-message" class="error-message"></div>
+        </div>
+      </div>
+      <div class="pagination">
+        <button id="prev-page">Previous</button>
+        <span id="current-page">Page 1</span>
+        <button id="next-page">Next</button>
+      </div>
+    </div>
+  </body>
+</html>
+
+
+  

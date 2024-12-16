@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Phone Verification</title>
+    <link rel="shortcut icon" type="image/png" href="img/favicon.png" />
+    <link rel="stylesheet" href="/CSS/loginotp.css" />
+    <script defer src="/js/loginotp.js"></script>
+  </head>
+  <body>
+    <div class="container">
+      <div class="verification-container">
+        <h2>Log in With OTP</h2>
+
+        <div id="phone-input-section">
+          <div class="input-group">
+            <select id="country-code" class="form-control">
+              <option value="91">+91 (India)</option>
+            </select>
+            <input
+              type="tel"
+              id="phone-number"
+              class="form-control"
+              placeholder="Enter phone number"
+              maxlength="10"
+            />
+          </div>
+          <button id="send-otp-btn" class="btn">Send OTP</button>
+        </div>
+
+        <div id="otp-verify-section" style="display: none">
+          <div class="input-group">
+            <input
+              type="text"
+              id="otp-input"
+              class="form-control"
+              placeholder="Enter 6-digit OTP"
+              maxlength="6"
+            />
+          </div>
+          <button id="verify-otp-btn" class="btn">Verify OTP</button>
+          <p id="resend-otp" class="resend-link">Resend OTP</p>
+        </div>
+
+        <div id="status-message" class="status"></div>
+      </div>
+    </div>
+  </body>
+</html>

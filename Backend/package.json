@@ -1,0 +1,34 @@
+{
+  "name": "task_node",
+  "version": "1.0.0",
+  "description": "Node task manager",
+  "main": "app.js",
+  "scripts": {
+    "start": "nodemon server.js",
+    "start:prod": "NODE_ENV=production nodemon server.js"
+  },
+  "author": "Arumugasamy",
+  "license": "ISC",
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "body-parser": "^1.20.3",
+    "cookie-parser": "^1.4.7",
+    "cors": "^2.8.5",
+    "crypto": "^1.0.1",
+    "dotenv": "^16.4.7",
+    "express": "^4.21.2",
+    "jsonwebtoken": "^9.0.2",
+    "live-server": "^1.2.2",
+    "mongodb": "^6.11.0",
+    "mongoose": "^8.8.4",
+    "morgan": "^1.10.0",
+    "nodemailer": "^6.9.16",
+    "slugify": "^1.6.6",
+    "twilio": "^5.3.7",
+    "util": "^0.12.5",
+    "validator": "^13.12.0"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.7"
+  }
+}
