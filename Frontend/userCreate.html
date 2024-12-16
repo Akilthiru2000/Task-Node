@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Create User</title>
+    <link rel="shortcut icon" type="image/png" href="img/favicon.png" />
+    <link rel="stylesheet" href="/CSS/userCreate.css" />
+    <script defer src="/js/userCreate.js"></script>
+  </head>
+  <body>
+    <div class="form-container">
+      <input type="hidden" id="userRole" value="admin" />
+      <h1>Create User</h1>
+      <form id="userForm">
+        <label for="name">Name</label>
+        <input
+          type="text"
+          id="name"
+          name="name"
+          required
+          minlength="8"
+          maxlength="20"
+          placeholder="Enter User Name"
+        />
+
+        <label for="email">Email:</label>
+        <input
+          id="email"
+          name="email"
+          required
+          placeholder="Enter User Email"
+        />
+
+        <label for="number">Contact Number:</label>
+        <input
+          id="number"
+          name="number"
+          type="number"
+          required
+          placeholder="Enter Contact Number"
+        />
+
+        <label for="password">password:</label>
+        <input
+          id="password"
+          name="password"
+          type="text"
+          required
+          placeholder="Enter Your password"
+        />
+
+        <label for="passwordConfirm">Confirm Password:</label>
+        <input
+          id="passwordConfirm"
+          name="passwordConfirm"
+          type="text"
+          required
+          placeholder="Enter Your Confirm password"
+        />
+
+        <button type="submit">Create User</button>
+      </form>
+      <div id="responseMessage"></div>
+    </div>
+  </body>
+</html>

@@ -34,7 +34,7 @@ document
           "Task created successfully!";
         document.getElementById("responseMessage").style.color = "green";
         document.getElementById("taskForm").reset(); // Clear the form
-        window.location.href = "/admin-dashboard.html";
+        window.location.href = "/dashboard.html";
       } else {
         const error = await response.json();
         document.getElementById(

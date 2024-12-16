@@ -35,6 +35,7 @@
   border: none;
   cursor: pointer;
   transition: color 0.3s;
+  padding-right: 50px;
 }
 
 .nav__el:hover {
@@ -79,7 +80,7 @@
 .nav__search-input {
   border: none;
   outline: none;
-  padding: 16px;
+  padding: 19px;
   font-size: 18px;
   color: #000;
   flex-grow: 1;
@@ -91,7 +92,6 @@
 
 body {
   font-family: Arial, sans-serif;
-  margin: 20px;
 }
 h1 {
   color: #333;
@@ -145,6 +145,7 @@ li {
   border-radius: 10px;
   padding: 15px;
   background-color: gold;
+  padding-right: 15px;
 }
 .btn-logout:hover {
   background-color: chocolate;
@@ -241,4 +242,99 @@ li {
 .delete-btn,
 .update-btn {
   margin: 0 5px;
+}
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+table th,
+table td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: left;
+}
+table th {
+  background-color: #f2f2f2;
+}
+.error-message {
+  color: red;
+  font-weight: bold;
+}
+select {
+  padding: 4px;
+}
+.priority-low {
+  color: green;
+  font-weight: bold;
+}
+.priority-medium {
+  color: orange;
+  font-weight: bold;
+}
+.priority-high {
+  color: red;
+  font-weight: bold;
+}
+.controls {
+  display: flex;
+  justify-content: flex-end;
+  gap: 20px;
+}
+.pagination {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+.main-container {
+  display: flex;
+  min-height: 100vh;
+}
+
+.sidebar {
+  width: 250px;
+  background-color: #1d7ddd;
+  color: #fff;
+  padding: 20px;
+}
+
+.sidebar-menu {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.sidebar-item {
+  padding: 15px;
+  cursor: pointer;
+  border-bottom: 1px solid #1d7ddd;
+  text-align: left;
+  color: #000;
+}
+
+.sidebar-item:hover,
+.sidebar-item.active {
+  background-color: #ddd71d;
+}
+
+.content {
+  flex: 1;
+}
+
+header.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 20px;
+  background: #1d7ddd;
+}
+
+section#mainContent {
+  margin-top: 20px;
+  padding: 20px;
+  background-color: #fff;
+  border-radius: 5px;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+}
+.maintab {
+  display: inline-flex;
 }

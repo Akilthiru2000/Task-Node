@@ -131,7 +131,6 @@ const displayTasks = (tasks) => {
     taskTableBody.appendChild(row);
   });
 
-  // Event Listeners
   document.getElementById("status-filter").addEventListener("change", () => {
     const filters = getFilters();
     fetchUserTasks(filters);
