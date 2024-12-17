@@ -11,6 +11,9 @@ router
   .get(userController.getAllUser)
   .post(userController.createUser);
 
+router.route("/unmapfromadmin/:id").post(authController.unmapUserFromAdmin);
+router.route("/mapbyadmin/:id").post(authController.mapUserToAdmin);
+router.route("/claim").get(authController.getClaimUser);
 router.route("/admin").get(authController.getUserByAdmin);
 router.route("/:id").get(userController.getUser);
 

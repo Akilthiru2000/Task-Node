@@ -246,3 +246,151 @@ exports.gettaskByadmin = async (req, res, next) => {
     return next(error);
   }
 };
+
+exports.getClaimUser = async (req, res, next) => {
+  try {
+    console.log("inside the claim");
+    const users = await User.find({ admin_id: null, role: { $ne: "admin" } });
+    console.log(users);
+    res.status(200).json({
+      message: "Users fetched successfully",
+      totalusers: users.length,
+      data: users,
+    });
+  } catch (err) {
+    const error = new Error(err.message || "Server error");
+    error.statusCode = 500;
+    return next(error);
+  }
+};
+
+exports.unmapUserFromAdmin = async (req, res, next) => {
+  try {
+    console.log("inside the unmap");
+    let token;
+    if (
+      req.headers.authorization &&
+      req.headers.authorization.startsWith("Bearer")
+    ) {
+      token = req.headers.authorization.split(" ")[1];
+    } else if (req.cookies.jwt) {
+      token = req.cookies.jwt;
+    }
+
+    if (!token) {
+      const error = new Error(
+        "You are not logged in! Please log in to get access."
+      );
+      error.statusCode = 401;
+      return next(error);
+    }
+
+    const decoded = await promisify(jwt.verify)(token, process.env.JWT_SECRET);
+    const adminId = decoded.id; // admin id fetch
+    console.log(req.params.id);
+    const userId = req.params.id;
+    console.log(userId);
+
+    if (!userId) {
+      const error = new Error("User ID is required.");
+      error.statusCode = 400;
+      return next(error);
+    }
+
+    const user = await User.findOne({ _id: userId, admin_id: adminId });
+
+    if (!user) {
+      return res.status(404).json({
+        message: "No user found or user not associated with this admin.",
+      });
+    }
+
+    const tasksInProgress = await Task.find({
+      assignee: userId,
+      status: "inprogress",
+    });
+    console.log(tasksInProgress);
+    if (tasksInProgress.length > 0) {
+      return res.status(400).json({
+        message:
+          "User cannot be unmapped from admin as they have tasks in progress.",
+      });
+    }
+
+    user.admin_id = null;
+    await user.save();
+
+    return res.status(200).json({
+      message: "User successfully unmapped from admin.",
+      user: user,
+    });
+  } catch (err) {
+    const error = new Error(err.message || "Server error");
+    error.statusCode = 500;
+    next(error);
+  }
+};
+
+exports.mapUserToAdmin = async (req, res, next) => {
+  try {
+    console.log("inside the map");
+
+    let token;
+    if (
+      req.headers.authorization &&
+      req.headers.authorization.startsWith("Bearer")
+    ) {
+      token = req.headers.authorization.split(" ")[1];
+    } else if (req.cookies.jwt) {
+      token = req.cookies.jwt;
+    }
+
+    if (!token) {
+      const error = new Error(
+        "You are not logged in! Please log in to get access."
+      );
+      error.statusCode = 401;
+      return next(error);
+    }
+
+    const decoded = await promisify(jwt.verify)(token, process.env.JWT_SECRET);
+    const adminId = decoded.id; // admin id fetch
+    console.log(req.params.id);
+    const userId = req.params.id;
+    console.log(userId);
+
+    if (!userId) {
+      const error = new Error("User ID is required.");
+      error.statusCode = 400;
+      return next(error);
+    }
+
+    const existingUser = await User.findOne({ _id: userId, admin_id: adminId });
+
+    if (existingUser) {
+      return res.status(400).json({
+        message: "User is already mapped to this admin.",
+      });
+    }
+
+    const user = await User.findOne({ _id: userId });
+
+    if (!user) {
+      return res.status(404).json({
+        message: "User not found.",
+      });
+    }
+
+    user.admin_id = adminId;
+    await user.save();
+
+    return res.status(200).json({
+      message: "User successfully mapped to admin.",
+      user: user,
+    });
+  } catch (err) {
+    const error = new Error(err.message || "Server error");
+    error.statusCode = 500;
+    next(error);
+  }
+};

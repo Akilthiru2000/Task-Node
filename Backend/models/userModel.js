@@ -47,6 +47,7 @@ const userSchema = new mongoose.Schema({
         return el === this.password;
       },
       message: "Password and confirm Password does not match",
+      select: false,
     },
   },
 });
