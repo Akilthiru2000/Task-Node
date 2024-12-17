@@ -338,3 +338,65 @@ section#mainContent {
 .maintab {
   display: inline-flex;
 }
+
+.form-container {
+  max-width: 500px;
+  margin: auto;
+  padding: 20px;
+  background-color: #fff;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.form-h1 {
+  text-align: center;
+}
+
+label {
+  display: block;
+  margin: 10px 0 5px;
+  font-weight: bold;
+}
+
+#title,
+#description,
+#priority,
+#dueDate {
+  width: 90%;
+  padding: 10px;
+  margin-bottom: 15px;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+}
+
+.btn-create {
+  background-color: #28a745;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+  border-radius: 5px;
+  margin: 0 auto;
+  width: 90%;
+  padding: 10px;
+  margin-bottom: 15px;
+  border: 1px solid #ccc;
+}
+
+.btn-create:hover {
+  background-color: #218838;
+}
+
+#responseMessage {
+  text-align: center;
+  margin-top: 10px;
+  font-weight: bold;
+}
+#createTaskTab,
+#manageTaskTab {
+  cursor: pointer;
+  padding: 20px;
+  border-radius: 5px;
+  color: #28a745;
+  background-color: aqua;
+}

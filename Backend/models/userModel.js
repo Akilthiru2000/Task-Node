@@ -17,11 +17,21 @@ const userSchema = new mongoose.Schema({
   phone: {
     type: Number,
     required: [true, "please provide your number"],
+    validate: {
+      validator: function (value) {
+        return /^[0-9]{10,15}$/.test(value);
+      },
+    },
   },
   role: {
     type: String,
     enum: ["user", "admin"],
     default: "user",
+  },
+  admin_id: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "User",
+    default: null,
   },
   password: {
     type: String,
