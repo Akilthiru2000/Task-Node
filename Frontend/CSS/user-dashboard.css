@@ -19,7 +19,7 @@ select {
   padding: 4px;
 }
 .priority-low {
-  color: green;
+  color: red;
   font-weight: bold;
 }
 .priority-medium {
@@ -27,7 +27,7 @@ select {
   font-weight: bold;
 }
 .priority-high {
-  color: red;
+  color: green;
   font-weight: bold;
 }
 .controls {

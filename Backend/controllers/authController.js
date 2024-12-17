@@ -159,3 +159,101 @@ exports.updateTaskStatus = async (req, res, next) => {
     next(error);
   }
 };
+// exports.restrictTo = (...roles) => {
+//   return (req, res, next) => {
+//     if (!roles.includes(req.user.role)) {
+//       return next(
+//         new AppError("You do not have permission to perform this action", 403)
+//       );
+//     }
+
+//     next();
+//   };
+// };
+
+exports.getUserByAdmin = async (req, res, next) => {
+  try {
+    //get a jwt token and find the id
+    let token;
+    if (
+      req.headers.authorization &&
+      req.headers.authorization.startsWith("Bearer")
+    ) {
+      token = req.headers.authorization.split(" ")[1];
+    } else if (req.cookies.jwt) {
+      token = req.cookies.jwt;
+    }
+    if (!token) {
+      const error = new Error(
+        err.message || "You are not logged in! Please log in to get access."
+      );
+      error.statusCode = 401;
+      next(error);
+    }
+
+    const decoded = await promisify(jwt.verify)(token, process.env.JWT_SECRET);
+    console.log(decoded);
+    const adminId = decoded.id; //admin id fetch
+
+    const users = await User.find({ admin_id: adminId });
+    console.log(users);
+
+    res.status(200).json({
+      message: "Users fetched successfully",
+      totalusers: users.length,
+      data: users,
+    });
+  } catch (err) {
+    const error = new Error(err.message || "Server error");
+    error.statusCode = 500;
+    next(error);
+  }
+};
+
+exports.gettaskByadmin = async (req, res, next) => {
+  try {
+    let token;
+    if (
+      req.headers.authorization &&
+      req.headers.authorization.startsWith("Bearer")
+    ) {
+      token = req.headers.authorization.split(" ")[1];
+    } else if (req.cookies.jwt) {
+      token = req.cookies.jwt;
+    }
+
+    if (!token) {
+      const error = new Error(
+        "You are not logged in! Please log in to get access."
+      );
+      error.statusCode = 401;
+      return next(error);
+    }
+
+    const decoded = await promisify(jwt.verify)(token, process.env.JWT_SECRET);
+    const adminId = decoded.id; // admin id fetch
+
+    const users = await User.find({ admin_id: adminId });
+
+    let allTasks = [];
+    for (const user of users) {
+      const tasks = await Task.find({ assignee: user._id })
+        .populate("assignee", "name")
+        .sort({ dueDate: 1 });
+
+      allTasks = allTasks.concat(tasks);
+    }
+
+    res.status(200).json({
+      status: "success",
+      results: allTasks.length,
+      data: {
+        tasks: allTasks,
+      },
+    });
+  } catch (err) {
+    const error = new Error(err.message || "Server error");
+    error.statusCode = 500;
+    return next(error);
+  }
+};

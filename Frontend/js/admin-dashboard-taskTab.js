@@ -221,15 +221,21 @@ const getTask = async () => {
         ? new Date(task.dueDate).toLocaleDateString()
         : "No Due Date";
       const createdAt = new Date(task.createdAt).toLocaleString();
+      const priorityClass = `priority-${task.priority.toLowerCase()}`;
+      const statusClass = `status-${task.status.toLowerCase()}`;
 
       row.innerHTML = `
             <td>${createdAt}</td>
             <td>${task.title}</td>
             <td>${task.description}</td>
             <td>${task.assignee ? task.assignee.name : "No assignee"}</td>
-            <td>${task.priority}</td>
+            <td class=${priorityClass}>${
+        task.priority.charAt(0).toUpperCase() + task.priority.slice(1)
+      }</td>
             <td>${dueDate}</td>
-            <td>${task.status}</td>
+            <td class=${statusClass}>${
+        task.status.charAt(0).toUpperCase() + task.status.slice(1)
+      }</td>
 
             <td>
               <div class="action-buttons">

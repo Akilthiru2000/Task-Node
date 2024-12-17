@@ -15,7 +15,7 @@ exports.getAllTask = async (req, res, next) => {
         tasks,
       },
     });
-
+    console.log(tasks);
     next();
   } catch (err) {
     const error = new Error(err.message || "Server error");

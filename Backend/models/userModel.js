@@ -11,7 +11,7 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: [true, "Please provide your email"],
     unique: true,
-    lowerCase: true,
+    lowercase: true,
     validate: [validator.isEmail, "please provide a valid email"],
   },
   phone: {
@@ -29,7 +29,7 @@ const userSchema = new mongoose.Schema({
     default: "user",
   },
   admin_id: {
-    type: mongoose.Schema.Types.ObjectId,
+    type: mongoose.Schema.ObjectId,
     ref: "User",
     default: null,
   },

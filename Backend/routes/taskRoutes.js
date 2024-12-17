@@ -12,6 +12,8 @@ router.route("/:id/status").patch(authController.updateTaskStatus);
 
 router.route("/taskbyuser").get(authController.getTasksByUser);
 
+router.route("/taskbyadmin").get(authController.gettaskByadmin);
+
 router
   .route("/:id")
   .get(taskController.getTask)

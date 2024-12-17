@@ -11,6 +11,7 @@ router
   .get(userController.getAllUser)
   .post(userController.createUser);
 
+router.route("/admin").get(authController.getUserByAdmin);
 router.route("/:id").get(userController.getUser);
 
 module.exports = router;
