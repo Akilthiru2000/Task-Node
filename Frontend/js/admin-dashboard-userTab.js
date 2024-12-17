@@ -1,4 +1,14 @@
 const userTab = () => {
+  const getJwtCookie = (name) => {
+    const cookies = document.cookie.split("; ");
+    for (let cookie of cookies) {
+      const [cookieName, cookieValue] = cookie.split("=");
+      if (cookieName === name) {
+        return decodeURIComponent(cookieValue);
+      }
+    }
+    return null;
+  };
   const userSection = document.querySelector(
     ".sidebar-item[data-section='users']"
   );
@@ -91,14 +101,22 @@ const userTab = () => {
 
   const getAllUsers = async () => {
     try {
-      const response = await fetch("http://127.0.0.1:3000/api/v1/users");
+      const token = getJwtCookie("jwt");
+      const response = await fetch("http://127.0.0.1:3000/api/v1/users/admin", {
+        method: "GET",
+        credentials: "include",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      });
 
       if (!response.ok) {
         throw new Error(`Error: ${response.statusText}`);
       }
 
       const data = await response.json();
-      const users = data.data.users;
+      const users = data.data;
       const tableBody = document.querySelector("#usersTable tbody");
 
       tableBody.innerHTML = "";

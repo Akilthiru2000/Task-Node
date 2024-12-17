@@ -1,3 +1,13 @@
+const getJwtCookie = (name) => {
+  const cookies = document.cookie.split("; ");
+  for (let cookie of cookies) {
+    const [cookieName, cookieValue] = cookie.split("=");
+    if (cookieName === name) {
+      return decodeURIComponent(cookieValue);
+    }
+  }
+  return null;
+};
 const taskSection = document.querySelector(
   ".sidebar-item[data-section='tasks']"
 );
@@ -176,12 +186,25 @@ function renderTabs() {
 
 const getTask = async () => {
   try {
-    const response = await fetch("http://127.0.0.1:3000/api/v1/task");
+    const token = getJwtCookie("jwt");
+
+    const response = await fetch(
+      "http://127.0.0.1:3000/api/v1/task/taskbyadmin",
+      {
+        method: "GET",
+        credentials: "include",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
     if (!response.ok) {
       throw new Error(`Error: ${response.statusText}`);
     }
 
     const data = await response.json();
+    console.log(data);
     const tasks = data.data.tasks;
     const taskContainer = document.getElementById("taskContainer");
     const errorMessage = document.getElementById("errorMessage");
@@ -392,13 +415,21 @@ const updateTask = async (taskId) => {
 };
 const populateAssigneeDropdown = async () => {
   try {
-    const response = await fetch("http://127.0.0.1:3000/api/v1/users");
+    const token = getJwtCookie("jwt");
+    const response = await fetch("http://127.0.0.1:3000/api/v1/users/admin", {
+      method: "GET",
+      credentials: "include",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    });
     if (!response.ok) {
       throw new Error(`Error: ${response.status}`);
     }
 
     const data = await response.json();
-    const users = data.data.users;
+    const users = data.data;
     // console.log(users);
     const assigneeDropdown = document.getElementById("assignee");
 
