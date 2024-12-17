@@ -29,21 +29,21 @@ exports.createTask = async (req, res, next) => {
     // Create task by admin
     const task = await Task.create(req.body);
 
-    if (req.body.assignee) {
-      const assignee = await User.findById(req.body.assignee);
+    // if (req.body.assignee) {
+    //   const assignee = await User.findById(req.body.assignee);
 
-      if (assignee) {
-        const message = `A new task has been assigned to you:\n\nTask Title: ${
-          task.title || "Untitled Task"
-        }\nDescription: ${task.description || "No description provided"}`;
+    //   if (assignee) {
+    //     const message = `A new task has been assigned to you:\n\nTask Title: ${
+    //       task.title || "Untitled Task"
+    //     }\nDescription: ${task.description || "No description provided"}`;
 
-        await sendEmail({
-          email: assignee.email,
-          subject: "New Task Assignment",
-          message,
-        });
-      }
-    }
+    //     await sendEmail({
+    //       email: assignee.email,
+    //       subject: "New Task Assignment",
+    //       message,
+    //     });
+    //   }
+    // }
 
     res.status(201).json({
       status: "success",

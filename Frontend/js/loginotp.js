@@ -77,7 +77,7 @@ async function verifyOTP() {
 
     if (response.ok) {
       showStatus("Phone number verified successfully!", "success");
-      window.location.href = "/dashboard.html";
+      window.location.href = "/admin-dashboard.html";
     } else {
       showStatus(result.error || "OTP verification failed", "error");
     }

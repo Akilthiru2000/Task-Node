@@ -37,7 +37,7 @@ const loginUser = async (email, password, errorMessage) => {
       console.log(userRole);
 
       if (userRole === "admin") {
-        window.location.href = "/dashboard.html";
+        window.location.href = "/admin-dashboard.html";
       } else {
         window.location.href = "/user-dashboard.html";
       }

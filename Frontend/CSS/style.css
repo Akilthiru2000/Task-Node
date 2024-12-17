@@ -341,10 +341,10 @@ section#mainContent {
 
 .form-container {
   max-width: 500px;
-  margin: auto;
+  margin: 0 auto;
   padding: 20px;
   background-color: #fff;
-  border: 1px solid #ddd;
+  border: 1px solid #3be719;
   border-radius: 5px;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
@@ -362,8 +362,14 @@ label {
 #title,
 #description,
 #priority,
-#dueDate {
-  width: 90%;
+#dueDate,
+#name,
+#email,
+#number,
+#password,
+#passwordConfirm,
+#assignee {
+  width: 100%;
   padding: 10px;
   margin-bottom: 15px;
   border: 1px solid #ccc;
@@ -377,7 +383,7 @@ label {
   cursor: pointer;
   border-radius: 5px;
   margin: 0 auto;
-  width: 90%;
+  width: 100%;
   padding: 10px;
   margin-bottom: 15px;
   border: 1px solid #ccc;
@@ -393,7 +399,9 @@ label {
   font-weight: bold;
 }
 #createTaskTab,
-#manageTaskTab {
+#manageTaskTab,
+#createUserTab,
+#manageUserTab {
   cursor: pointer;
   padding: 20px;
   border-radius: 5px;
