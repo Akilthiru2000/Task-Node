@@ -239,7 +239,7 @@ const userTab = () => {
       }
 
       const data = await response.json();
-      console.log(data);
+      // console.log(data);
       if (response.ok) {
         alert("User unmapped Successfully");
         await getAllUsers();

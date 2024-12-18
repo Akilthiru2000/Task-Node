@@ -90,7 +90,9 @@ function renderTabs() {
               </select>
 
               <label for="dueDate">Due Date:</label>
-              <input type="date" id="dueDate" name="dueDate" required />
+              <input type="date" id="dueDate" name="dueDate" required min="${
+                new Date().toISOString().split("T")[0]
+              }"/>
 
               <label for="assignee">Assignee:</label>
               <select id="assignee" name="assignee">
@@ -157,6 +159,7 @@ function renderTabs() {
                 id="dueDate"
                 name="dueDate"
                 required
+                min="${new Date().toISOString().split("T")[0]}"
               />
               <br />
 
@@ -204,7 +207,7 @@ const getTask = async () => {
     }
 
     const data = await response.json();
-    console.log(data);
+    // console.log(data);
     const tasks = data.data.tasks;
     const taskContainer = document.getElementById("taskContainer");
     const errorMessage = document.getElementById("errorMessage");

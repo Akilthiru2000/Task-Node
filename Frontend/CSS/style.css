@@ -197,7 +197,7 @@ li {
   cursor: pointer;
   border-radius: 5px;
   margin: 0 auto;
-  width: 90%;
+  width: 100%;
   padding: 10px;
   margin-bottom: 15px;
   border: 1px solid #ccc;
@@ -216,7 +216,7 @@ li {
   cursor: pointer;
   border-radius: 5px;
   margin: 0 auto;
-  width: 90%;
+  width: 100%;
   padding: 10px;
   margin-bottom: 15px;
   border: 1px solid #ccc;
@@ -254,7 +254,7 @@ table td {
   text-align: left;
 }
 table th {
-  background-color: #f2f2f2;
+  background-color: #04aa6d;
 }
 .error-message {
   color: red;
@@ -349,7 +349,6 @@ section#mainContent {
   padding: 20px;
   background-color: #fff;
   border-radius: 5px;
-  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
 }
 .maintab {
   display: inline-flex;
@@ -421,12 +420,24 @@ label {
   cursor: pointer;
   padding: 20px;
   border-radius: 5px;
-  color: #28a745;
-  background-color: aqua;
+  background-color: gold;
+}
+#createTaskTab:hover,
+#manageTaskTab:hover,
+#createUserTab:hover,
+#manageUserTab:hover {
+  background-color: chocolate;
 }
 .btn-unlink {
-  background-color: aquamarine;
+  background-color: chocolate;
   padding: 15px;
   border-radius: 5px;
   cursor: pointer;
+  color: #fff;
+}
+.btn-unlink:hover {
+  background-color: gold;
+}
+h2 {
+  padding: 20px;
 }

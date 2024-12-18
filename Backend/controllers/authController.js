@@ -129,7 +129,7 @@ exports.updateTaskStatus = async (req, res, next) => {
     //update the task by the user
     const { status } = req.body;
     const taskId = req.params.id;
-    console.log(taskId);
+    // console.log(taskId);
     const allowedStatuses = ["open", "inprogress", "completed", "rejected"];
     if (!allowedStatuses.includes(status)) {
       const error = new Error("Invalid status value");
@@ -181,11 +181,11 @@ exports.getUserByAdmin = async (req, res, next) => {
     }
 
     const decoded = await promisify(jwt.verify)(token, process.env.JWT_SECRET);
-    console.log(decoded);
+    // console.log(decoded);
     const adminId = decoded.id; //admin id fetch
 
     const users = await User.find({ admin_id: adminId });
-    console.log(users);
+    // console.log(users);
 
     res.status(200).json({
       message: "Users fetched successfully",
@@ -249,9 +249,9 @@ exports.gettaskByadmin = async (req, res, next) => {
 
 exports.getClaimUser = async (req, res, next) => {
   try {
-    console.log("inside the claim");
+    // console.log("inside the claim");
     const users = await User.find({ admin_id: null, role: { $ne: "admin" } });
-    console.log(users);
+    // console.log(users);
     res.status(200).json({
       message: "Users fetched successfully",
       totalusers: users.length,
@@ -266,7 +266,7 @@ exports.getClaimUser = async (req, res, next) => {
 
 exports.unmapUserFromAdmin = async (req, res, next) => {
   try {
-    console.log("inside the unmap");
+    // console.log("inside the unmap");
     let token;
     if (
       req.headers.authorization &&
@@ -287,9 +287,9 @@ exports.unmapUserFromAdmin = async (req, res, next) => {
 
     const decoded = await promisify(jwt.verify)(token, process.env.JWT_SECRET);
     const adminId = decoded.id; // admin id fetch
-    console.log(req.params.id);
+    // console.log(req.params.id);
     const userId = req.params.id;
-    console.log(userId);
+    // console.log(userId);
 
     if (!userId) {
       const error = new Error("User ID is required.");
@@ -308,7 +308,7 @@ exports.unmapUserFromAdmin = async (req, res, next) => {
       assignee: userId,
       status: ["inprogress", "open"],
     });
-    console.log(tasksInProgress);
+    // console.log(tasksInProgress);
     if (tasksInProgress.length > 0) {
       return res.status(400).json({
         message:
@@ -332,7 +332,7 @@ exports.unmapUserFromAdmin = async (req, res, next) => {
 
 exports.mapUserToAdmin = async (req, res, next) => {
   try {
-    console.log("inside the map");
+    // console.log("inside the map");
 
     let token;
     if (
@@ -354,9 +354,9 @@ exports.mapUserToAdmin = async (req, res, next) => {
 
     const decoded = await promisify(jwt.verify)(token, process.env.JWT_SECRET);
     const adminId = decoded.id; // admin id fetch
-    console.log(req.params.id);
+    // console.log(req.params.id);
     const userId = req.params.id;
-    console.log(userId);
+    // console.log(userId);
 
     if (!userId) {
       const error = new Error("User ID is required.");
