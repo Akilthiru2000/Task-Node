@@ -185,9 +185,13 @@ const userTab = () => {
     if (!formData) return;
 
     try {
+      const token = getJwtCookie("jwt");
       const response = await fetch("http://127.0.0.1:3000/api/v1/users", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
         body: JSON.stringify(formData),
       });
 

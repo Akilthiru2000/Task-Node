@@ -1,5 +1,7 @@
 const User = require("./../models/userModel");
 const Task = require("../models/taskModel");
+const { promisify } = require("util");
+const jwt = require("jsonwebtoken");
 
 exports.getAllUser = async (req, res, next) => {
   try {
@@ -21,7 +23,29 @@ exports.getAllUser = async (req, res, next) => {
 };
 exports.createUser = async (req, res, next) => {
   try {
-    const user = await User.create(req.body);
+    //get a jwt token and find the id
+    let token;
+    if (
+      req.headers.authorization &&
+      req.headers.authorization.startsWith("Bearer")
+    ) {
+      token = req.headers.authorization.split(" ")[1];
+    } else if (req.cookies.jwt) {
+      token = req.cookies.jwt;
+    }
+    if (!token) {
+      const error = new Error(
+        err.message || "You are not logged in! Please log in to get access."
+      );
+      error.statusCode = 401;
+      next(error);
+    }
+
+    const decoded = await promisify(jwt.verify)(token, process.env.JWT_SECRET);
+    console.log(decoded);
+    const adminId = decoded.id; //admin id fetch
+
+    const user = await User.create({ ...req.body, admin_id: adminId });
     res.status(201).json({
       status: "success",
       data: {
