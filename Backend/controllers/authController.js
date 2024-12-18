@@ -39,16 +39,14 @@ exports.login = async (req, res, next) => {
     const { email, password } = req.body;
 
     if (!email || !password) {
-      const error = new Error(
-        err.message || "Email and password are required!"
-      );
+      const error = new Error("Email and password are required!");
       error.statusCode = 400;
       next(error);
     }
 
     const user = await User.findOne({ email }).select("+password");
     if (!user || !(await user.correctPassword(password, user.password))) {
-      const error = new Error(err.message || "Incorrect email or password!");
+      const error = new Error("Incorrect email or password!");
       error.statusCode = 401;
       next(error);
     }
@@ -87,7 +85,7 @@ exports.getTasksByUser = async (req, res, next) => {
 
     if (!token) {
       const error = new Error(
-        err.message || "You are not logged in! Please log in to get access."
+        "You are not logged in! Please log in to get access."
       );
       error.statusCode = 401;
       next(error);
@@ -174,7 +172,7 @@ exports.getUserByAdmin = async (req, res, next) => {
     }
     if (!token) {
       const error = new Error(
-        err.message || "You are not logged in! Please log in to get access."
+        "You are not logged in! Please log in to get access."
       );
       error.statusCode = 401;
       next(error);

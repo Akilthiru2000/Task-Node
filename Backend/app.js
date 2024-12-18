@@ -30,9 +30,9 @@ app.use("/api/v1/user", twilioRouter);
 
 // Error handling middleware
 app.use((err, req, res, next) => {
-  console.log("inside the error handler");
+  // console.log("inside the error handler");
   const statusCode = err.statusCode || 500;
-  console.log(err.message);
+  // console.log(err.message);
   const message = err.message || "Something went wrong";
   res.status(statusCode).json({
     status: "fail",
