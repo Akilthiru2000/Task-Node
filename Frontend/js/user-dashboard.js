@@ -10,7 +10,7 @@ function getJwtCookie(name) {
 }
 let currentPage = 1;
 const limit = 10; // Number of tasks per page
-
+let totalPages;
 const fetchUserTasks = async (filters = {}) => {
   const status = filters.status || "";
   const priority = filters.priority || "";
@@ -40,6 +40,7 @@ const fetchUserTasks = async (filters = {}) => {
 
     const data = await response.json();
     displayTasks(data.tasks);
+    totalPages = data.totalPages;
     handlePagination(data.totalPages);
   } catch (error) {
     console.error("Error fetching tasks:", error.message);
@@ -149,8 +150,10 @@ const displayTasks = (tasks) => {
   });
 
   document.getElementById("next-page").addEventListener("click", () => {
-    currentPage++;
-    fetchUserTasks(getFilters());
+    if (currentPage < totalPages) {
+      currentPage++;
+      fetchUserTasks(getFilters());
+    }
   });
 
   const getFilters = () => {

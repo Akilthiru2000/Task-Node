@@ -117,7 +117,7 @@ table th {
   font-weight: bold;
 }
 select {
-  padding: 4px;
+  padding: 8px;
 }
 .priority-low {
   color: red;
@@ -140,5 +140,19 @@ select {
 .pagination {
   display: flex;
   justify-content: center;
+  align-content: center;
   margin-top: 20px;
+  cursor: pointer;
+}
+
+#prev-page,
+#next-page {
+  padding: 10px;
+  cursor: pointer;
+  border-radius: 5px;
+  color: blue;
+  background-color: cornsilk;
+}
+#current-page {
+  padding: 10px;
 }
