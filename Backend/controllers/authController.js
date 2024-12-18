@@ -298,7 +298,6 @@ exports.unmapUserFromAdmin = async (req, res, next) => {
     }
 
     const user = await User.findOne({ _id: userId, admin_id: adminId });
-
     if (!user) {
       return res.status(404).json({
         message: "No user found or user not associated with this admin.",
@@ -307,7 +306,7 @@ exports.unmapUserFromAdmin = async (req, res, next) => {
 
     const tasksInProgress = await Task.find({
       assignee: userId,
-      status: "inprogress",
+      status: ["inprogress", "open"],
     });
     console.log(tasksInProgress);
     if (tasksInProgress.length > 0) {

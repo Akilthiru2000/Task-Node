@@ -88,6 +88,7 @@ const userTab = () => {
             <tr>
               <th>Name</th>
               <th>Email</th>
+              <th>Action</th>
             </tr>
           </thead>
           <tbody></tbody>
@@ -97,6 +98,23 @@ const userTab = () => {
     `;
 
     await getAllUsers();
+
+    const usersTable = document.getElementById("usersTable");
+    if (usersTable) {
+      usersTable.addEventListener("click", (event) => {
+        const unlinkButton = event.target.closest("button");
+        if (unlinkButton) {
+          console.log("Button clicked!");
+          const userRow = unlinkButton.closest("tr");
+          if (userRow) {
+            const userId =
+              userRow.querySelector("td[data-user-id]").dataset.userId;
+            console.log(`User ID: ${userId}`);
+            unmapadmin(userId);
+          }
+        }
+      });
+    }
   };
 
   const getAllUsers = async () => {
@@ -122,7 +140,7 @@ const userTab = () => {
       tableBody.innerHTML = "";
 
       if (users.length === 0) {
-        tableBody.innerHTML = "<tr><td colspan='2'>No users found</td></tr>";
+        tableBody.innerHTML = "<tr><td colspan='3'>No users found</td></tr>";
         return;
       }
 
@@ -131,6 +149,7 @@ const userTab = () => {
         row.innerHTML = `
           <td>${user.name}</td>
           <td>${user.email}</td>
+          <td data-user-id=${user._id}><button class="btn-unlink">unlink</button></td>
         `;
         tableBody.appendChild(row);
       });
@@ -153,8 +172,10 @@ const userTab = () => {
 
   const showErrorMessage = (message) => {
     const responseMessage = document.getElementById("responseMessage");
-    responseMessage.innerText = `Error: ${message}`;
-    responseMessage.style.color = "red";
+    if (responseMessage) {
+      responseMessage.innerText = `Error: ${message}`;
+      responseMessage.style.color = "red";
+    }
   };
 
   const handleUserFormSubmission = async (e) => {
@@ -183,6 +204,47 @@ const userTab = () => {
     } catch (err) {
       showErrorMessage("An unexpected error occurred.");
       console.error(err.message);
+    }
+  };
+
+  const unmapadmin = async (userId) => {
+    try {
+      if (!userId) {
+        throw new Error("User ID is required");
+      }
+      const token = getJwtCookie("jwt");
+
+      if (!token) {
+        throw new Error("Authentication token is missing");
+      }
+
+      const response = await fetch(
+        `http://127.0.0.1:3000/api/v1/users/unmapfromadmin/${userId}`,
+        {
+          method: "POST",
+          credentials: "include",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      if (!response.ok) {
+        const errorBody = await response.text();
+        alert(`${errorBody}`);
+      }
+
+      const data = await response.json();
+      console.log(data);
+      if (response.ok) {
+        alert("User unmapped Successfully");
+        await getAllUsers();
+      }
+    } catch (err) {
+      console.error("Unmap admin error:", err);
+      const errorMessage = err.message || "An unexpected error occurred";
+      showErrorMessage(errorMessage);
+      return { success: false, error: errorMessage };
     }
   };
 

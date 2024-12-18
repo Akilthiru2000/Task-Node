@@ -314,8 +314,6 @@ const deleteTask = async (taskId) => {
     console.log(result.message || "Task deleted");
 
     await getTask();
-
-    alert("Task deleted successfully!");
   } catch (error) {
     console.error("Failed to delete task:", error);
     const errorMessage = document.getElementById("errorMessage");

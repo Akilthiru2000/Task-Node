@@ -424,3 +424,9 @@ label {
   color: #28a745;
   background-color: aqua;
 }
+.btn-unlink {
+  background-color: aquamarine;
+  padding: 15px;
+  border-radius: 5px;
+  cursor: pointer;
+}
