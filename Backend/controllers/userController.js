@@ -42,7 +42,7 @@ exports.createUser = async (req, res, next) => {
     }
 
     const decoded = await promisify(jwt.verify)(token, process.env.JWT_SECRET);
-    console.log(decoded);
+    // console.log(decoded);
     const adminId = decoded.id; //admin id fetch
 
     const user = await User.create({ ...req.body, admin_id: adminId });

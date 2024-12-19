@@ -123,7 +123,7 @@ const claimTab = () => {
       }
 
       const data = await response.json();
-      console.log(data);
+      // console.log(data);
       if (response.ok) {
         document.getElementById("claimResponseMessage").innerText =
           "User mapped Successfully";

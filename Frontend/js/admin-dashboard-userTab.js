@@ -104,12 +104,12 @@ const userTab = () => {
       usersTable.addEventListener("click", (event) => {
         const unlinkButton = event.target.closest("button");
         if (unlinkButton) {
-          console.log("Button clicked!");
+          // console.log("Button clicked!");
           const userRow = unlinkButton.closest("tr");
           if (userRow) {
             const userId =
               userRow.querySelector("td[data-user-id]").dataset.userId;
-            console.log(`User ID: ${userId}`);
+            // console.log(`User ID: ${userId}`);
             unmapadmin(userId);
           }
         }

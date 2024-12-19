@@ -307,9 +307,9 @@ const deleteTask = async (taskId) => {
     );
 
     if (deletedata.status === 204) {
-      console.log("Task deleted successfully");
-      await getTask();
+      // console.log("Task deleted successfully");
       alert("Task deleted successfully!");
+      await getTask();
       return;
     }
 
@@ -384,8 +384,8 @@ const updateTask = async (taskId) => {
           throw new Error(`Error updating task: ${updateResult.message}`);
         }
 
-        console.log("Updated task response:", updateResult);
-        console.log("Task updated successfully!");
+        // console.log("Updated task response:", updateResult);
+        // console.log("Task updated successfully!");
 
         if (updateTaskContainer) {
           updateTaskContainer.style.display = "none";
