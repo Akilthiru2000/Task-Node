@@ -54,42 +54,6 @@
   background-color: #ffb400;
 }
 
-.nav__search {
-  display: flex;
-  align-items: center;
-  border: 1px solid #fff;
-  border-radius: 5px;
-  overflow: hidden;
-  margin-right: 16px;
-}
-
-.nav__search-btn {
-  background: none;
-  border: none;
-  padding: 16px;
-  cursor: pointer;
-  color: #fff;
-}
-
-.nav__search-btn svg {
-  height: 20px;
-  width: 30px;
-  fill: #fff;
-}
-
-.nav__search-input {
-  border: none;
-  outline: none;
-  padding: 19px;
-  font-size: 18px;
-  color: #000;
-  flex-grow: 1;
-}
-
-.nav__search-input::placeholder {
-  color: #ccc;
-}
-
 body {
   font-family: Arial, sans-serif;
 }
