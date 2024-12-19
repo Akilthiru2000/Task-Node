@@ -203,7 +203,7 @@ const getTask = async () => {
       }
     );
     if (!response.ok) {
-      throw new Error(`Error: ${response.statusText}`);
+      throw new Error(`${response.statusText}`);
     }
 
     const data = await response.json();
@@ -290,7 +290,7 @@ const getTask = async () => {
 
     addTaskEventListeners();
   } catch (error) {
-    console.error("Failed to fetch tasks:", error);
+    console.error(error);
     const errorMessage = document.getElementById("errorMessage");
     if (errorMessage) {
       errorMessage.textContent =
@@ -426,7 +426,7 @@ const populateAssigneeDropdown = async () => {
       },
     });
     if (!response.ok) {
-      throw new Error(`Error: ${response.status}`);
+      throw new Error(`${response.status}`);
     }
 
     const data = await response.json();
@@ -462,7 +462,7 @@ const handleTaskSubmission = async (e) => {
 
   if (userRole !== "admin") {
     if (responseMessage) {
-      responseMessage.innerText = "Error: Only admins can create tasks.";
+      responseMessage.innerText = "Only admins can create tasks.";
       responseMessage.style.color = "red";
     }
     return;
@@ -486,11 +486,11 @@ const handleTaskSubmission = async (e) => {
       document.getElementById("taskForm").reset();
     } else {
       const error = await response.json();
-      responseMessage.innerText = `Error: ${error.message}`;
+      responseMessage.innerText = `${error.message}`;
       responseMessage.style.color = "red";
     }
   } catch (err) {
-    responseMessage.innerText = `Error: ${err.message}`;
+    responseMessage.innerText = `${err.message}`;
     responseMessage.style.color = "red";
   }
 };

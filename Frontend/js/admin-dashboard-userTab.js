@@ -130,7 +130,7 @@ const userTab = () => {
       });
 
       if (!response.ok) {
-        throw new Error(`Error: ${response.statusText}`);
+        throw new Error(`${response.statusText}`);
       }
 
       const data = await response.json();
@@ -173,7 +173,7 @@ const userTab = () => {
   const showErrorMessage = (message) => {
     const responseMessage = document.getElementById("responseMessage");
     if (responseMessage) {
-      responseMessage.innerText = `Error: ${message}`;
+      responseMessage.innerText = `${message}`;
       responseMessage.style.color = "red";
     }
   };

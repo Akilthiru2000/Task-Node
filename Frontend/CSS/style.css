@@ -390,6 +390,11 @@ label {
   border: 1px solid #ccc;
   border-radius: 3px;
 }
+#priority,
+#dueDate,
+#assignee {
+  cursor: pointer;
+}
 
 .btn-create {
   background-color: #28a745;

@@ -46,7 +46,7 @@ const fetchUserTasks = async (filters = {}) => {
     console.error("Error fetching tasks:", error.message);
     document.getElementById(
       "task-container"
-    ).innerHTML = `<p>Error: ${error.message}</p>`;
+    ).innerHTML = `<p>${error.message}</p>`;
   }
 };
 

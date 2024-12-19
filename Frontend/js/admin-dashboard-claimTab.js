@@ -66,7 +66,7 @@ const claimTab = () => {
       });
 
       if (!response.ok) {
-        throw new Error(`Error: ${response.statusText}`);
+        throw new Error(`${response.statusText}`);
       }
 
       const data = await response.json();
@@ -90,7 +90,7 @@ const claimTab = () => {
         tableBody.appendChild(row);
       });
     } catch (error) {
-      console.error("Failed to fetch users:", error.message);
+      console.error(error.message);
       document.getElementById("claimErrorMessage").innerText =
         "Failed to load users. Please try again later.";
     }
@@ -130,7 +130,7 @@ const claimTab = () => {
         await getClaimUser();
       }
     } catch (err) {
-      console.error("map admin error:", err);
+      console.error(err);
       const errorMessage = err.message || "An unexpected error occurred";
       showErrorMessage(errorMessage);
       return { success: false, error: errorMessage };
