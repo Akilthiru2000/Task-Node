@@ -101,8 +101,8 @@ function renderTabs() {
 
               <button class="btn-create" id="btn-create"type="submit">Create Task</button>
              <div class="loader-overlay" id="loader">
-                       <div class="loader"></div>
-            </div>
+              <div class="loader"></div>
+             </div>
 
             </form>
             <div id="responseMessage"></div>

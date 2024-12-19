@@ -11,10 +11,13 @@ function getJwtCookie(name) {
 let currentPage = 1;
 const limit = 10; // Number of tasks per page
 let totalPages;
+
 const fetchUserTasks = async (filters = {}) => {
+  const loader = document.getElementById("loader");
   const status = filters.status || "";
   const priority = filters.priority || "";
 
+  loader.classList.add("active");
   try {
     const token = getJwtCookie("jwt_user");
     if (!token) {
@@ -47,10 +50,13 @@ const fetchUserTasks = async (filters = {}) => {
     document.getElementById(
       "task-container"
     ).innerHTML = `<p>${error.message}</p>`;
+  } finally {
+    loader.classList.remove("active");
   }
 };
 
 const updateTaskStatus = async (taskId, newStatus) => {
+  loader.classList.add("active");
   try {
     const token = getJwtCookie("jwt_user");
     if (!token) {
@@ -79,6 +85,8 @@ const updateTaskStatus = async (taskId, newStatus) => {
   } catch (error) {
     console.error(`Error updating status for task ${taskId}:`, error.message);
     alert(`Failed to update status: ${error.message}`);
+  } finally {
+    loader.classList.remove("active");
   }
 };
 
@@ -181,6 +189,7 @@ fetchUserTasks();
 
 const logout = async () => {
   try {
+    loader.classList.add("active");
     const res = await fetch("http://127.0.0.1:3000/api/v1/users/logout", {
       method: "POST",
     });
@@ -189,10 +198,13 @@ const logout = async () => {
   } catch (err) {
     console.log(err.response);
     console.log(err.message);
+  } finally {
+    loader.classList.remove("active");
   }
 };
 
 const logoutbtn = document.querySelector(".btn-logout");
+const loader = document.getElementById("loader");
 if (logoutbtn) {
   logoutbtn.addEventListener("click", logout);
 }

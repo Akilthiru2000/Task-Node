@@ -7,6 +7,7 @@ document
     const password = document.getElementById("password").value;
     const errorMessage = document.getElementById("errorMessage");
     const statusMessage = document.getElementById("status-message");
+    const loader = document.getElementById("loader");
 
     errorMessage.textContent = "";
 
@@ -15,11 +16,18 @@ document
       return;
     }
 
-    loginUser(email, password, errorMessage, statusMessage);
+    loginUser(email, password, errorMessage, statusMessage, loader);
   });
 
-const loginUser = async (email, password, errorMessage, statusMessage) => {
+const loginUser = async (
+  email,
+  password,
+  errorMessage,
+  statusMessage,
+  loader
+) => {
   try {
+    loader.classList.add("active");
     const response = await fetch("http://127.0.0.1:3000/api/v1/users/login", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -48,5 +56,7 @@ const loginUser = async (email, password, errorMessage, statusMessage) => {
     }
   } catch (error) {
     errorMessage.textContent = error.message;
+  } finally {
+    loader.classList.remove("active");
   }
 };

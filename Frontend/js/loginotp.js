@@ -7,6 +7,7 @@ const otpInput = document.getElementById("otp-input");
 const verifyOTPBtn = document.getElementById("verify-otp-btn");
 const statusMessage = document.getElementById("status-message");
 const resendOTPLink = document.getElementById("resend-otp");
+const loader = document.getElementById("loader");
 
 function validatePhoneNumber(phoneNumber) {
   const phoneRegex = /^[0-9]{10}$/;
@@ -28,6 +29,7 @@ async function sendOTP() {
   }
 
   try {
+    loader.classList.add("active");
     const response = await fetch(`http://127.0.0.1:3000/api/v1/user/send-otp`, {
       method: "POST",
       headers: {
@@ -48,6 +50,8 @@ async function sendOTP() {
   } catch (error) {
     showStatus("Network error. Please try again.", "error");
     console.error("Send OTP Error:", error);
+  } finally {
+    loader.classList.remove("active");
   }
 }
 
@@ -62,6 +66,7 @@ async function verifyOTP() {
   }
 
   try {
+    loader.classList.add("active");
     const response = await fetch(
       `http://127.0.0.1:3000/api/v1/user/verify-otp`,
       {
@@ -84,6 +89,8 @@ async function verifyOTP() {
   } catch (error) {
     showStatus("Network error. Please try again.", "error");
     console.error("Verify OTP Error:", error);
+  } finally {
+    loader.classList.remove("active");
   }
 }
 
