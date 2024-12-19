@@ -4,10 +4,12 @@ body {
   justify-content: center;
   align-items: center;
   height: 100vh;
-  background-color: #f7f7f7;
+  background: url("/img/Background.jpg");
+  background-repeat: no-repeat;
+  background-size: 100vw 100vh;
 }
 .login-container {
-  background: #fff;
+  background: #abf5f7;
   padding: 20px;
   border-radius: 8px;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
@@ -32,7 +34,7 @@ input[type="password"] {
 button {
   width: 100%;
   padding: 10px;
-  background-color: #00f2fe;
+  background-color: #0050fe;
   color: white;
   font-size: 16px;
   border: none;
@@ -40,7 +42,7 @@ button {
   cursor: pointer;
 }
 button:hover {
-  background-color: #4facfe;
+  background-color: #fe7e4f;
 }
 .error {
   color: red;

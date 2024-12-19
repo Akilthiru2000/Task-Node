@@ -1,6 +1,6 @@
 body {
-  font-family: 'Arial', sans-serif;
-  background-color: #f4f4f4;
+  font-family: "Arial", sans-serif;
+  background-color: #cdeaf4;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -9,7 +9,7 @@ body {
 }
 
 .container {
-  background-color: white;
+  background-color: rgb(181, 242, 247);
   border-radius: 10px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   width: 100%;
@@ -38,7 +38,8 @@ body {
   margin-right: 10px;
 }
 
-#phone-number, #otp-input {
+#phone-number,
+#otp-input {
   width: 70%;
 }
 

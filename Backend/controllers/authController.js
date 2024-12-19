@@ -362,9 +362,9 @@ exports.mapUserToAdmin = async (req, res, next) => {
       return next(error);
     }
 
-    const existingUser = await User.findOne({ _id: userId, admin_id: adminId });
+    const alreadymap = await User.findOne({ _id: userId, admin_id: adminId });
 
-    if (existingUser) {
+    if (alreadymap) {
       return res.status(400).json({
         message: "User is already mapped to this admin.",
       });
