@@ -142,11 +142,6 @@ exports.updateTaskStatus = async (req, res, next) => {
       return next(error);
     }
 
-    if (task.assignee.toString() !== req.user.id) {
-      const error = new Error("Not authorized to update this task");
-      error.statusCode = 403;
-      return next(error);
-    }
     task.status = status;
     await task.save();
 
