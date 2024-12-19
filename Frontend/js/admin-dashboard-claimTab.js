@@ -40,12 +40,12 @@ const claimTab = () => {
       usersTable.addEventListener("click", (event) => {
         const claimButton = event.target.closest("button");
         if (claimButton) {
-          console.log("Button clicked!");
+          // console.log("Button clicked!");
           const userRow = claimButton.closest("tr");
           if (userRow) {
             const userId =
               userRow.querySelector("td[data-user-id]").dataset.userId;
-            console.log(`User ID: ${userId}`);
+            // console.log(`User ID: ${userId}`);
             mapUserToAdmin(userId);
           }
         }
@@ -125,7 +125,8 @@ const claimTab = () => {
       const data = await response.json();
       console.log(data);
       if (response.ok) {
-        alert("User mapped Successfully");
+        document.getElementById("claimResponseMessage").innerText =
+          "User mapped Successfully";
         await getClaimUser();
       }
     } catch (err) {
