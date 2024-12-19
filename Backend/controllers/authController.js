@@ -22,7 +22,11 @@ const createSendToken = (user, statusCode, res) => {
     secure: process.env.NODE_ENV === "production",
     sameSite: "lax",
   };
-  res.cookie("jwt", token, cookieOptions);
+  if (user.role === "admin") {
+    res.cookie("jwt_admin", token, cookieOptions);
+  } else {
+    res.cookie("jwt_user", token, cookieOptions);
+  }
 
   res.status(statusCode).json({
     status: "success",
@@ -362,6 +366,16 @@ exports.mapUserToAdmin = async (req, res, next) => {
     if (alreadymap) {
       return res.status(400).json({
         message: "User is already mapped to this admin.",
+      });
+    }
+    const mapOtherAdmin = await User.findOne({
+      _id: userId,
+      admin_id: { $ne: null },
+    });
+
+    if (mapOtherAdmin) {
+      return res.status(400).json({
+        message: "This user is already mapped to another admin.",
       });
     }
 

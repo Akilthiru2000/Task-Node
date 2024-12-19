@@ -99,7 +99,11 @@ function renderTabs() {
                 <option value="">Select Assignee</option>
               </select>
 
-              <button class="btn-create" type="submit">Create Task</button>
+              <button class="btn-create" id="btn-create"type="submit">Create Task</button>
+             <div class="loader-overlay" id="loader">
+                       <div class="loader"></div>
+            </div>
+
             </form>
             <div id="responseMessage"></div>
           </div>
@@ -189,7 +193,7 @@ function renderTabs() {
 
 const getTask = async () => {
   try {
-    const token = getJwtCookie("jwt");
+    const token = getJwtCookie("jwt_admin");
 
     const response = await fetch(
       "http://127.0.0.1:3000/api/v1/task/taskbyadmin",
@@ -416,7 +420,7 @@ const updateTask = async (taskId) => {
 };
 const populateAssigneeDropdown = async () => {
   try {
-    const token = getJwtCookie("jwt");
+    const token = getJwtCookie("jwt_admin");
     const response = await fetch("http://127.0.0.1:3000/api/v1/users/admin", {
       method: "GET",
       credentials: "include",
@@ -454,6 +458,8 @@ const handleTaskSubmission = async (e) => {
   const assignee = document.getElementById("assignee").value;
   const userRole = document.getElementById("userRole").value;
   const responseMessage = document.getElementById("responseMessage");
+  const loaderOverlay = document.getElementById("loader");
+  const formContainer = document.querySelector(".form-container");
 
   if (responseMessage) {
     responseMessage.innerText = "";
@@ -467,6 +473,8 @@ const handleTaskSubmission = async (e) => {
     }
     return;
   }
+  loaderOverlay.style.display = "flex";
+  formContainer.style.filter = "blur(3px)";
 
   try {
     const formData = { title, description, priority, dueDate, assignee };
@@ -492,6 +500,9 @@ const handleTaskSubmission = async (e) => {
   } catch (err) {
     responseMessage.innerText = `${err.message}`;
     responseMessage.style.color = "red";
+  } finally {
+    loaderOverlay.style.display = "none";
+    formContainer.style.filter = "none";
   }
 };
 

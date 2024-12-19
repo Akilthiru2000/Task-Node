@@ -16,7 +16,7 @@ const fetchUserTasks = async (filters = {}) => {
   const priority = filters.priority || "";
 
   try {
-    const token = getJwtCookie("jwt");
+    const token = getJwtCookie("jwt_user");
     if (!token) {
       throw new Error("No authentication token found");
     }
@@ -52,7 +52,7 @@ const fetchUserTasks = async (filters = {}) => {
 
 const updateTaskStatus = async (taskId, newStatus) => {
   try {
-    const token = getJwtCookie("jwt");
+    const token = getJwtCookie("jwt_user");
     if (!token) {
       throw new Error("No authentication token found");
     }

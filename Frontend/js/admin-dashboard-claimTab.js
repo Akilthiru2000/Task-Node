@@ -55,7 +55,7 @@ const claimTab = () => {
 
   const getClaimUser = async () => {
     try {
-      const token = getJwtCookie("jwt");
+      const token = getJwtCookie("jwt_admin");
       const response = await fetch("http://127.0.0.1:3000/api/v1/users/claim", {
         method: "GET",
         credentials: "include",
@@ -100,7 +100,7 @@ const claimTab = () => {
       if (!userId) {
         throw new Error("User ID is required");
       }
-      const token = getJwtCookie("jwt");
+      const token = getJwtCookie("jwt_admin");
 
       if (!token) {
         throw new Error("Authentication token is missing");

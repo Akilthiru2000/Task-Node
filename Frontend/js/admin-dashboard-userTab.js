@@ -119,7 +119,7 @@ const userTab = () => {
 
   const getAllUsers = async () => {
     try {
-      const token = getJwtCookie("jwt");
+      const token = getJwtCookie("jwt_admin");
       const response = await fetch("http://127.0.0.1:3000/api/v1/users/admin", {
         method: "GET",
         credentials: "include",
@@ -185,7 +185,7 @@ const userTab = () => {
     if (!formData) return;
 
     try {
-      const token = getJwtCookie("jwt");
+      const token = getJwtCookie("jwt_admin");
       const response = await fetch("http://127.0.0.1:3000/api/v1/users", {
         method: "POST",
         headers: {
@@ -216,7 +216,7 @@ const userTab = () => {
       if (!userId) {
         throw new Error("User ID is required");
       }
-      const token = getJwtCookie("jwt");
+      const token = getJwtCookie("jwt_admin");
 
       if (!token) {
         throw new Error("Authentication token is missing");
