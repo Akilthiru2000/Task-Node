@@ -3,7 +3,7 @@ const getJwtCookie = (name) => {
   for (let cookie of cookies) {
     const [cookieName, cookieValue] = cookie.split("=");
     if (cookieName === name) {
-      return decodeURIComponent(cookieValue);
+      return cookieValue;
     }
   }
   return null;

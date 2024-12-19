@@ -1,4 +1,14 @@
 const claimTab = () => {
+  const getJwtCookie = (name) => {
+    const cookies = document.cookie.split("; ");
+    for (let cookie of cookies) {
+      const [cookieName, cookieValue] = cookie.split("=");
+      if (cookieName === name) {
+        return cookieValue;
+      }
+    }
+    return null;
+  };
   const claimSection = document.querySelector(
     ".sidebar-item[data-section='claim']"
   );

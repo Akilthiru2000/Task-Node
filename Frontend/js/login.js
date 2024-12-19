@@ -6,6 +6,7 @@ document
     const email = document.getElementById("email").value.trim();
     const password = document.getElementById("password").value;
     const errorMessage = document.getElementById("errorMessage");
+    const statusMessage = document.getElementById("status-message");
 
     errorMessage.textContent = "";
 
@@ -14,16 +15,16 @@ document
       return;
     }
 
-    loginUser(email, password, errorMessage);
+    loginUser(email, password, errorMessage, statusMessage);
   });
 
-const loginUser = async (email, password, errorMessage) => {
+const loginUser = async (email, password, errorMessage, statusMessage) => {
   try {
     const response = await fetch("http://127.0.0.1:3000/api/v1/users/login", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ email, password }),
-      credentials: "include", // Ensure credentials (cookies) are included in the request
+      credentials: "include", // must credentials
     });
 
     if (!response.ok) {
@@ -41,7 +42,7 @@ const loginUser = async (email, password, errorMessage) => {
       } else {
         window.location.href = "/user-dashboard.html";
       }
-      errorMessage.textContent = "Login successful!";
+      statusMessage.textContent = "Login successful!";
     } else {
       throw new Error(data.message || "Login failed");
     }
