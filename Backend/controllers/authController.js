@@ -310,7 +310,7 @@ exports.unmapUserFromAdmin = async (req, res, next) => {
     if (tasksInProgress.length > 0) {
       return res.status(400).json({
         message:
-          "User cannot be unmapped from admin as they have tasks in progress.",
+          "User cannot be unmapped from admin as they have tasks open or in progress.",
       });
     }
 
