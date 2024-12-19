@@ -9,6 +9,23 @@ const claimTab = () => {
     }
     return null;
   };
+  const showLoader = () => {
+    const loader = document.getElementById("loader");
+    const mainContent = document.getElementById("mainContent");
+    if (loader && mainContent) {
+      loader.style.display = "flex";
+      mainContent.style.filter = "blur(3px)";
+    }
+  };
+
+  const hideLoader = () => {
+    const loader = document.getElementById("loader");
+    const mainContent = document.getElementById("mainContent");
+    if (loader && mainContent) {
+      loader.style.display = "none";
+      mainContent.style.filter = "none";
+    }
+  };
   const claimSection = document.querySelector(
     ".sidebar-item[data-section='claim']"
   );
@@ -55,6 +72,7 @@ const claimTab = () => {
 
   const getClaimUser = async () => {
     try {
+      showLoader();
       const token = getJwtCookie("jwt_admin");
       const response = await fetch("http://127.0.0.1:3000/api/v1/users/claim", {
         method: "GET",
@@ -93,10 +111,13 @@ const claimTab = () => {
       console.error(error.message);
       document.getElementById("claimErrorMessage").innerText =
         "Failed to load users. Please try again later.";
+    } finally {
+      hideLoader();
     }
   };
   const mapUserToAdmin = async (userId) => {
     try {
+      showLoader();
       if (!userId) {
         throw new Error("User ID is required");
       }
@@ -134,6 +155,8 @@ const claimTab = () => {
       const errorMessage = err.message || "An unexpected error occurred";
       showErrorMessage(errorMessage);
       return { success: false, error: errorMessage };
+    } finally {
+      hideLoader();
     }
   };
 

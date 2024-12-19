@@ -14,6 +14,16 @@ const userTab = () => {
   );
   const mainContent = document.getElementById("mainContent");
 
+  const showLoader = () => {
+    const loader = document.getElementById("loader");
+    if (loader) loader.style.display = "flex";
+  };
+
+  const hideLoader = () => {
+    const loader = document.getElementById("loader");
+    if (loader) loader.style.display = "none";
+  };
+
   const renderTabs = () => {
     mainContent.innerHTML = `
       <div class="users">
@@ -22,6 +32,9 @@ const userTab = () => {
       </div>
       <div id="tabContent">
         <!-- Dynamic content will be inserted here -->
+      </div>
+      <div class="loader-overlay" id="loader">
+        <div class="loader"></div>
       </div>
     `;
 
@@ -38,7 +51,7 @@ const userTab = () => {
       renderUserForm();
     });
 
-    manageUserTab.addEventListener("click", () => {
+    manageUserTab.addEventListener("click", async () => {
       manageUserTab.classList.add("active");
       createUserTab.classList.remove("active");
       renderManageUsersView();
@@ -69,6 +82,9 @@ const userTab = () => {
 
           <button class="btn-create" type="submit">Create User</button>
         </form>
+        <div class="loader-overlay" id="loader">
+          <div class="loader"></div>
+        </div>
         <div id="responseMessage"></div>
       </div>
     `;
@@ -94,6 +110,9 @@ const userTab = () => {
           <tbody></tbody>
         </table>
         <div id="errorMessage"></div>
+        <div class="loader-overlay" id="loader">
+          <div class="loader"></div>
+        </div>
       </div>
     `;
 
@@ -104,12 +123,10 @@ const userTab = () => {
       usersTable.addEventListener("click", (event) => {
         const unlinkButton = event.target.closest("button");
         if (unlinkButton) {
-          // console.log("Button clicked!");
           const userRow = unlinkButton.closest("tr");
           if (userRow) {
             const userId =
               userRow.querySelector("td[data-user-id]").dataset.userId;
-            // console.log(`User ID: ${userId}`);
             unmapadmin(userId);
           }
         }
@@ -118,6 +135,7 @@ const userTab = () => {
   };
 
   const getAllUsers = async () => {
+    showLoader();
     try {
       const token = getJwtCookie("jwt_admin");
       const response = await fetch("http://127.0.0.1:3000/api/v1/users/admin", {
@@ -157,6 +175,8 @@ const userTab = () => {
       console.error("Failed to fetch users:", error.message);
       document.getElementById("errorMessage").innerText =
         "Failed to load users. Please try again later.";
+    } finally {
+      hideLoader();
     }
   };
 
@@ -180,9 +200,13 @@ const userTab = () => {
 
   const handleUserFormSubmission = async (e) => {
     e.preventDefault();
+    showLoader();
 
     const formData = validateFormData();
-    if (!formData) return;
+    if (!formData) {
+      hideLoader();
+      return;
+    }
 
     try {
       const token = getJwtCookie("jwt_admin");
@@ -208,10 +232,13 @@ const userTab = () => {
     } catch (err) {
       showErrorMessage("An unexpected error occurred.");
       console.error(err.message);
+    } finally {
+      hideLoader();
     }
   };
 
   const unmapadmin = async (userId) => {
+    showLoader();
     try {
       if (!userId) {
         throw new Error("User ID is required");
@@ -239,7 +266,6 @@ const userTab = () => {
       }
 
       const data = await response.json();
-      // console.log(data);
       if (response.ok) {
         alert("User unmapped Successfully");
         await getAllUsers();
@@ -249,6 +275,8 @@ const userTab = () => {
       const errorMessage = err.message || "An unexpected error occurred";
       showErrorMessage(errorMessage);
       return { success: false, error: errorMessage };
+    } finally {
+      hideLoader();
     }
   };
 

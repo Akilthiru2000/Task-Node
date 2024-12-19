@@ -8,6 +8,24 @@ const getJwtCookie = (name) => {
   }
   return null;
 };
+const showLoader = () => {
+  const loader = document.getElementById("loader");
+  const mainContent = document.getElementById("mainContent");
+  if (loader && mainContent) {
+    loader.style.display = "flex";
+    mainContent.style.filter = "blur(3px)";
+  }
+};
+
+const hideLoader = () => {
+  const loader = document.getElementById("loader");
+  const mainContent = document.getElementById("mainContent");
+  if (loader && mainContent) {
+    loader.style.display = "none";
+    mainContent.style.filter = "none";
+  }
+};
+
 const taskSection = document.querySelector(
   ".sidebar-item[data-section='tasks']"
 );
@@ -193,6 +211,7 @@ function renderTabs() {
 
 const getTask = async () => {
   try {
+    showLoader();
     const token = getJwtCookie("jwt_admin");
 
     const response = await fetch(
@@ -211,7 +230,6 @@ const getTask = async () => {
     }
 
     const data = await response.json();
-    // console.log(data);
     const tasks = data.data.tasks;
     const taskContainer = document.getElementById("taskContainer");
     const errorMessage = document.getElementById("errorMessage");
@@ -300,18 +318,20 @@ const getTask = async () => {
       errorMessage.textContent =
         "Failed to load tasks. Please try again later.";
     }
+  } finally {
+    hideLoader();
   }
 };
 
 const deleteTask = async (taskId) => {
   try {
+    showLoader();
     const deletedata = await fetch(
       `http://127.0.0.1:3000/api/v1/task/${taskId}`,
       { method: "DELETE" }
     );
 
     if (deletedata.status === 204) {
-      // console.log("Task deleted successfully");
       alert("Task deleted successfully!");
       await getTask();
       return;
@@ -327,11 +347,14 @@ const deleteTask = async (taskId) => {
     if (errorMessage) {
       errorMessage.textContent = `Failed to delete task: ${error.message}`;
     }
+  } finally {
+    hideLoader();
   }
 };
 
 const updateTask = async (taskId) => {
   try {
+    showLoader();
     const updateTaskContainer = document.getElementById("updateTaskContainer");
     if (updateTaskContainer) {
       updateTaskContainer.style.display = "block";
@@ -357,6 +380,7 @@ const updateTask = async (taskId) => {
     const updateForm = document.getElementById("updateForm");
     updateForm.onsubmit = async (e) => {
       e.preventDefault();
+      hideLoader();
 
       const formData = {
         title: document.getElementById("title").value,
@@ -388,9 +412,6 @@ const updateTask = async (taskId) => {
           throw new Error(`Error updating task: ${updateResult.message}`);
         }
 
-        // console.log("Updated task response:", updateResult);
-        // console.log("Task updated successfully!");
-
         if (updateTaskContainer) {
           updateTaskContainer.style.display = "none";
         }
@@ -402,6 +423,8 @@ const updateTask = async (taskId) => {
         if (errorMessage) {
           errorMessage.textContent = `Failed to update task: ${error.message}`;
         }
+      } finally {
+        hideLoader();
       }
     };
 
@@ -416,10 +439,14 @@ const updateTask = async (taskId) => {
   } catch (error) {
     console.error("Failed to prepare task update:", error);
     alert(`Failed to prepare task update: ${error.message}`);
+  } finally {
+    hideLoader();
   }
 };
+
 const populateAssigneeDropdown = async () => {
   try {
+    showLoader();
     const token = getJwtCookie("jwt_admin");
     const response = await fetch("http://127.0.0.1:3000/api/v1/users/admin", {
       method: "GET",
@@ -435,7 +462,6 @@ const populateAssigneeDropdown = async () => {
 
     const data = await response.json();
     const users = data.data;
-    // console.log(users);
     const assigneeDropdown = document.getElementById("assignee");
 
     users.forEach((user) => {
@@ -446,8 +472,11 @@ const populateAssigneeDropdown = async () => {
     });
   } catch (error) {
     console.error("Error fetching users:", error);
+  } finally {
+    hideLoader();
   }
 };
+
 const handleTaskSubmission = async (e) => {
   e.preventDefault();
 
@@ -458,8 +487,6 @@ const handleTaskSubmission = async (e) => {
   const assignee = document.getElementById("assignee").value;
   const userRole = document.getElementById("userRole").value;
   const responseMessage = document.getElementById("responseMessage");
-  const loaderOverlay = document.getElementById("loader");
-  const formContainer = document.querySelector(".form-container");
 
   if (responseMessage) {
     responseMessage.innerText = "";
@@ -473,10 +500,9 @@ const handleTaskSubmission = async (e) => {
     }
     return;
   }
-  loaderOverlay.style.display = "flex";
-  formContainer.style.filter = "blur(3px)";
 
   try {
+    showLoader();
     const formData = { title, description, priority, dueDate, assignee };
 
     const response = await fetch("http://127.0.0.1:3000/api/v1/task", {
@@ -501,17 +527,13 @@ const handleTaskSubmission = async (e) => {
     responseMessage.innerText = `${err.message}`;
     responseMessage.style.color = "red";
   } finally {
-    loaderOverlay.style.display = "none";
-    formContainer.style.filter = "none";
+    hideLoader();
   }
 };
 
-if (taskSection) {
-  taskSection.addEventListener("click", renderTabs);
-}
-
 const logout = async () => {
   try {
+    showLoader();
     const res = await fetch("http://127.0.0.1:3000/api/v1/users/logout", {
       method: "POST",
       credentials: "include",
@@ -521,8 +543,14 @@ const logout = async () => {
   } catch (err) {
     console.log(err.response);
     console.log(err.message);
+  } finally {
+    hideLoader();
   }
 };
+
+if (taskSection) {
+  taskSection.addEventListener("click", renderTabs);
+}
 
 const logoutbtn = document.querySelector(".btn-logout");
 if (logoutbtn) {
