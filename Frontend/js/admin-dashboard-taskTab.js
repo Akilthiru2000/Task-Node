@@ -487,6 +487,7 @@ const handleTaskSubmission = async (e) => {
   const assignee = document.getElementById("assignee").value;
   const userRole = document.getElementById("userRole").value;
   const responseMessage = document.getElementById("responseMessage");
+  const createButton = document.getElementById("btn-create");
 
   if (responseMessage) {
     responseMessage.innerText = "";
@@ -503,6 +504,7 @@ const handleTaskSubmission = async (e) => {
 
   try {
     showLoader();
+    createButton.disabled = true;
     const formData = { title, description, priority, dueDate, assignee };
 
     const response = await fetch("http://127.0.0.1:3000/api/v1/task", {
